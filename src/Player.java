@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 public class Player {
 
-    public int cardNo;
 
     private ArrayList<String> cardsBox;
 

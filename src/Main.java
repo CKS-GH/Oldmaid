@@ -70,7 +70,6 @@ public class Main {
     public static void playerDrawCard(int cardsNO, ArrayList<String> one, ArrayList<String> two) {
 
 
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("請輸入拿取牌位置: " + "1 to " + cardsNO);
 
@@ -101,6 +100,31 @@ public class Main {
         return totalCards != 1;
     }
 
+    public static void firstDraw(List<String> initialBox, HashSet<String> playergetvardsbox) {
+
+     for (int i = 0; i < 13 ; i++){
+        int ran1 = initialBox.size();
+        int ran = getRandom(ran1);
+        String cards = initialBox.get(ran);
+        boolean ture = playergetvardsbox.contains(cards);
+         playergetvardsbox.add(cards);
+        if (ture) {
+            playergetvardsbox.remove(cards);
+        }
+
+        initialBox.remove(ran);
+
+    }
+
+    }
+    public static void print (HashSet<String> playergetvardsbox) {
+        System.out.println();
+        for (String string : playergetvardsbox)
+            System.out.print("牌" + string);
+    }
+
+
+
     public static void main(String[] args) throws InterruptedException {
 
         String[] standardValues = {"A", "2", "3", "4", "5", "6", "7", //開牌組下
@@ -117,7 +141,43 @@ public class Main {
         Player computer2 = new Player(new ArrayList<>());
         Player computer3 = new Player(new ArrayList<>());
 
+        Player playerx = new Player(new HashSet<>());
+        Player computer1x = new Player(new HashSet<>());
+        Player computer2x = new Player(new HashSet<>());
+        Player computer3x = new Player(new HashSet<>());
 
+
+        System.out.println();
+        System.out.print(initialBox);
+
+        firstDraw(initialBox,playerx.getCardsBox2());
+        playerx.getCardsBox2().add(initialBox.get(0));
+        print(playerx.getCardsBox2());
+        firstDraw(initialBox,computer1x.getCardsBox2());
+        print(computer1x.getCardsBox2());
+        firstDraw(initialBox,computer2x.getCardsBox2());
+        print(computer2x.getCardsBox2());
+        firstDraw(initialBox,computer3x.getCardsBox2());
+        print(computer3x.getCardsBox2());
+
+
+        Queue<HashSet<String>> queue = new LinkedList<>();
+        queue.offer(playerx.getCardsBox2());
+        queue.offer(computer1x.getCardsBox2());
+        queue.offer(computer2x.getCardsBox2());
+        queue.offer(computer3x.getCardsBox2());
+
+
+
+
+
+
+
+
+
+
+
+        /*
         drawCards(initialBox, computer1.getCardsBox());// 加入電腦1手牌
         drawCards(initialBox, computer2.getCardsBox());// 加入電腦2手牌
         drawCards(initialBox, computer3.getCardsBox());// 加入電腦3手牌
@@ -221,6 +281,9 @@ public class Main {
 
         } while (win(player.getCardsBox().size(),computer1.getCardsBox().size(),
                 computer2.getCardsBox().size(),computer3.getCardsBox().size()));
+
+
+         */
 
 
     }

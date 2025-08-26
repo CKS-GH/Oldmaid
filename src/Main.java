@@ -102,27 +102,27 @@ public class Main {
 
     public static void firstDraw(List<String> initialBox, HashSet<String> playergetvardsbox) {
 
-     for (int i = 0; i < 13 ; i++){
-        int ran1 = initialBox.size();
-        int ran = getRandom(ran1);
-        String cards = initialBox.get(ran);
-        boolean ture = playergetvardsbox.contains(cards);
-         playergetvardsbox.add(cards);
-        if (ture) {
-            playergetvardsbox.remove(cards);
+        for (int i = 0; i < 13; i++) {
+            int ran1 = initialBox.size();
+            int ran = getRandom(ran1);
+            String cards = initialBox.get(ran);
+            boolean ture = playergetvardsbox.contains(cards);
+            playergetvardsbox.add(cards);
+            if (ture) {
+                playergetvardsbox.remove(cards);
+            }
+
+            initialBox.remove(ran);
+
         }
 
-        initialBox.remove(ran);
-
     }
 
-    }
-    public static void print (HashSet<String> playergetvardsbox) {
+    public static void print(HashSet<String> playergetvardsbox) {
         System.out.println();
         for (String string : playergetvardsbox)
             System.out.print("牌" + string);
     }
-
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -150,30 +150,66 @@ public class Main {
         System.out.println();
         System.out.print(initialBox);
 
-        firstDraw(initialBox,playerx.getCardsBox2());
-        playerx.getCardsBox2().add(initialBox.get(0));
+        firstDraw(initialBox, playerx.getCardsBox2());
         print(playerx.getCardsBox2());
-        firstDraw(initialBox,computer1x.getCardsBox2());
+        firstDraw(initialBox, computer1x.getCardsBox2());
         print(computer1x.getCardsBox2());
-        firstDraw(initialBox,computer2x.getCardsBox2());
+        firstDraw(initialBox, computer2x.getCardsBox2());
         print(computer2x.getCardsBox2());
-        firstDraw(initialBox,computer3x.getCardsBox2());
+        firstDraw(initialBox, computer3x.getCardsBox2());
         print(computer3x.getCardsBox2());
 
-
+        boolean ture1 = playerx.getCardsBox2().contains(initialBox.get(0));
+        playerx.getCardsBox2().add(initialBox.get(0));
+        if (ture1) {
+            playerx.getCardsBox2().remove(initialBox.get(0));
+        }
+        System.out.print("0000000"+initialBox);
         Queue<HashSet<String>> queue = new LinkedList<>();
         queue.offer(playerx.getCardsBox2());
         queue.offer(computer1x.getCardsBox2());
         queue.offer(computer2x.getCardsBox2());
         queue.offer(computer3x.getCardsBox2());
+        boolean win = true;
+        int j=1;
+    do {
 
+            System.out.println();
+            System.out.println("ROUND"+j);
+                 j++;
+        System.out.println("剩下玩家"+queue.size());
+            for (int i = 0; i < queue.size(); i++) {
+                HashSet<String> currentSet = queue.peek();
 
+                if (currentSet != null && !currentSet.isEmpty()) {
+                    System.out.println("Player" + (i + 1));
+                    System.out.println("玩家原先牌"+queue.peek());
+                    List<String> list = new ArrayList<>(currentSet);
+                    Random random = new Random();
+                    String randomElement = list.get(random.nextInt(list.size()));
 
+                    currentSet.remove(randomElement);
+                    System.out.println("玩家抽了"+randomElement);
+                    HashSet<String> list2 = new HashSet<String>();
+                    list2.addAll(currentSet);
+                    queue.poll();
+                    boolean ture = queue.peek().contains(randomElement);
+                    queue.peek().add(randomElement);
+                    if (ture) {
+                        queue.peek().remove(randomElement);
+                    }
 
+                    if (!currentSet.isEmpty()) {
+                        queue.add(list2);
 
+                    }
+                    System.out.println("Player"+(i+2)+"  抽後牌:" + queue.peek());
+                }else queue.poll();
+                if (queue.size()==1){win =false;}
+            }
+        }while (win);
 
-
-
+    System.out.println(queue);
 
 
 
@@ -288,8 +324,6 @@ public class Main {
 
     }
 }
-
-
 
 
 
